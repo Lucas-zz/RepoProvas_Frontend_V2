@@ -48,13 +48,13 @@ export interface Test {
 
 export type TestByDiscipline = Term & {
   disciplines: Discipline[];
-}
+};
 
 export type TestByTeacher = TeacherDisciplines & {
   teacher: Teacher;
   disciplines: Discipline[];
   tests: Test[];
-}
+};
 
 function createHeaders(token: string) {
   return {
@@ -75,7 +75,7 @@ async function signIn(signInData: UserData) {
 async function getTestsByDiscipline(token: string) {
   const config = createHeaders(token);
   return baseAPI.get<{ tests: TestByDiscipline[] }>(
-    `/tests?groupBy=disciplines`,
+    "/tests?groupBy=disciplines",
     config
   );
 }
@@ -95,7 +95,7 @@ async function getCategories(token: string) {
 
 async function getTeachers(token: string) {
   const config = createHeaders(token);
-  return baseAPI.get(`/teachers`, config);
+  return baseAPI.get("/teachers", config);
 }
 
 async function getDisciplines(token: string) {
@@ -110,7 +110,7 @@ async function getTeachersByDiscipline(discipline: string, token: string) {
 
 async function addTest(body: any, token: string) {
   const config = createHeaders(token);
-  return baseAPI.post(`/tests`, body, config);
+  return baseAPI.post("/tests", body, config);
 }
 
 async function countView(id: number, token: string) {

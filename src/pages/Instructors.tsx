@@ -41,10 +41,15 @@ function Instructors() {
 
       const { data: testsData } = await api.getTestsByTeacher(token);
       setTeachersDisciplines(testsData.tests);
+      console.log(teachersDisciplines)
+
       const { data: categoriesData } = await api.getCategories(token);
       setCategories(categoriesData.categories);
+      console.log(categories);
+
       const { data: teacherData } = await api.getTeachers(token);
       setTeachers(teacherData.teachers);
+      console.log(teachers);
     }
     loadPage();
   }, [token]);
@@ -75,7 +80,7 @@ function Instructors() {
             alignItems: "center",
             flexWrap: "wrap",
             gap: "10vw",
-            paddingBottom: "20vh"
+            paddingBottom: "10vh"
           }}
         >
           <Button
@@ -125,7 +130,7 @@ function TeachersDisciplinesAccordions({
   const teachers = getUniqueTeachers(teachersDisciplines);
 
   return (
-    <Box sx={{ mt: "50px" }}>
+    <Box sx={{}}>
       {teachers.map((teacher) => (
         <Accordion sx={{ backgroundColor: "#FFF" }} key={teacher}>
           <AccordionSummary expandIcon={<ExpandMoreIcon />}>
@@ -150,6 +155,7 @@ function TeachersDisciplinesAccordions({
 }
 
 function getUniqueTeachers(teachersDisciplines: TestByTeacher[]) {
+
   return [
     ...new Set(
       teachersDisciplines.map(
@@ -175,6 +181,7 @@ function testOfThisCategory(
   teacherDiscipline: TeacherDisciplines,
   category: Category
 ) {
+  //console.log(teacherDiscipline.tests)
   return teacherDiscipline.tests.some(
     (test) => test.category.id === category.id
   );
@@ -193,7 +200,7 @@ function Categories({
 }: CategoriesProps) {
   return (
     <>
-      <Box sx={{ mb: "8px" }}>
+      <Box sx={{ mb: "4px" }}>
         <Typography fontWeight="bold">{category.name}</Typography>
         {teachersDisciplines
           .filter(
@@ -231,7 +238,7 @@ function Tests({ tests, disciplineName }: TestsProps) {
   return (
     <>
       {tests.map((test) => (
-        <Box sx={{ display: "flex", width: "80vw", gap: "30px" }}>
+        <Box sx={{ display: "flex", gap: "30px" }}>
           <Typography key={test.id} color="#878787">
             <Link
               onClick={() => countView(test.id)}

@@ -80,11 +80,11 @@ function CreateTest() {
         if (!token) return;
 
         try {
-            const promise = await api.addTest(formData, token);
+            await api.addTest(formData, token);
 
             setMessage({
                 type: "success",
-                text: "Documento adicionado com sucesso!",
+                text: "Prova adicionada com sucesso!",
             });
 
             reload = !reload;
@@ -92,7 +92,7 @@ function CreateTest() {
             if (error.response) {
                 setMessage({
                     type: "error",
-                    text: error.response.data,
+                    text: error.response.data.message,
                 });
                 return;
             }
@@ -155,6 +155,7 @@ function CreateTest() {
                         alignItems: "center",
                         flexWrap: "wrap",
                         gap: "10vw",
+                        paddingBottom: "5vh",
                     }}
                 >
                     <Button
@@ -177,10 +178,9 @@ function CreateTest() {
                     <Box
                         sx={{
                             width: "80vw",
-                            maxWidth: "850px",
+                            maxWidth: "650px",
                             display: "flex",
                             flexDirection: "column",
-                            paddingBottom: "20vh",
                             gap: "8px",
                         }}
                     >
@@ -235,8 +235,8 @@ function CreateTest() {
                             sx={{
                                 display: "flex",
                                 justifyContent: "center",
-                                color: "#FFF",
                                 backgroundColor: "#1976D2",
+                                color: "#FFF",
                                 padding: "15px"
                             }}
                             type="submit"

@@ -32,13 +32,13 @@ function Disciplines() {
   const [categories, setCategories] = useState<Category[]>([]);
   const [search, setSearch] = useState("");
 
-  const termsData = terms?.map(term => term.disciplines);
+  const termsList = terms?.map((term) => term.disciplines);
   const disciplinesName: string[] = [];
 
-  if (termsData) {
-    for (let terms of termsData) {
-      for (let discipline of terms) {
-        disciplinesName.push(discipline.name);
+  if (termsList) {
+    for (let terms of termsList) {
+      for (let discip of terms) {
+        disciplinesName.push(discip.name);
       }
     }
   }
@@ -46,23 +46,24 @@ function Disciplines() {
   let filteredDisciplines: any[] = [];
 
   if (search) {
-    terms.forEach((term: TestByDiscipline) => {
-      const filter = term.disciplines.filter(el => el.name === search);
+    terms.forEach((term) => {
+      const filter = term.disciplines.filter((el) => el.name === search);
 
       if (filter.length !== 0) filteredDisciplines.push(filter[0]);
     });
   }
 
   useEffect(() => {
-    async function loadPage() {
+    async function reloadPage() {
       if (!token) return;
 
       const { data: testsData } = await api.getTestsByDiscipline(token);
       setTerms(testsData.tests);
+      console.log(terms)
       const { data: categoriesData } = await api.getCategories(token);
       setCategories(categoriesData.categories);
     }
-    loadPage();
+    reloadPage();
   }, [token]);
 
   return (
@@ -91,7 +92,7 @@ function Disciplines() {
             alignItems: "center",
             flexWrap: "wrap",
             gap: "10vw",
-            paddingBottom: "20vh"
+            paddingBottom: "10vh",
           }}
         >
           <Button
@@ -130,8 +131,8 @@ interface TermsAccordionsProps {
 
 function TermsAccordions({ categories, terms }: TermsAccordionsProps) {
   return (
-    <Box sx={{ mt: "50px" }}>
-      {terms.map((term) => (
+    <Box sx={{}}>
+      {terms?.map((term) => (
         <Accordion sx={{ backgroundColor: "#FFF" }} key={term.id}>
           <AccordionSummary expandIcon={<ExpandMoreIcon />}>
             <Typography fontWeight="bold">{term.number} Período</Typography>
@@ -254,7 +255,7 @@ function Tests({ categoryId, testsWithTeachers: testsWithDisciplines }: TestsPro
         testsWithDisciplines.tests
           .filter(test => testOfThisCategory(test, categoryId))
           .map((test) => (
-            <Box sx={{ display: "flex", width: "80vw", gap: "30px", }}>
+            <Box sx={{ display: "flex", gap: "30px" }}>
               <Typography key={test.id} color="#878787">
                 <Link
                   onClick={() => countView(test.id)}
